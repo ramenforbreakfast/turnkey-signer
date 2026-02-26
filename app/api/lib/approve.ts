@@ -42,9 +42,10 @@ export async function approveIfValid(
   }
 
   // Verify the signing target is the expected wallet address
+  // V2 activity types use signTransactionIntentV2 / signRawPayloadIntentV2, both of which have signWith
   const signWith: string =
-    activity.intent?.signTransactionIntent?.signWith ??
-    activity.intent?.signRawPayloadIntent?.signWith ??
+    activity.intent?.signTransactionIntentV2?.signWith ??
+    activity.intent?.signRawPayloadIntentV2?.signWith ??
     ''
 
   if (signWith !== allowedWallet) {
