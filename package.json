@@ -1,0 +1,19 @@
+{
+  "name": "turnkey-signer",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@turnkey/api-key-stamper": "0.6.2",
+    "@turnkey/http": "3.17.0",
+    "next": "14.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "20.6.0",
+    "typescript": "5.4.5"
+  }
+}
