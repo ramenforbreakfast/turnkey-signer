@@ -1,4 +1,7 @@
 .env
 .env.local
+.env.a
+.env.b
+.env.executor
 node_modules/
 .next/
