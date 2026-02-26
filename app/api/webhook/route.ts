@@ -1,12 +1,12 @@
 /**
  * POST /api/webhook
  *
- * Called by the RFQ engine immediately after Turnkey returns CONSENSUS_NEEDED.
- * The RFQ engine notifies both signers in parallel — no Turnkey webhook config needed.
+ * Called by your application immediately after Turnkey returns CONSENSUS_NEEDED.
+ * Notify both signers in parallel — no Turnkey webhook config needed.
  *
  * Expected body: { activityId: string }
  *
- * RFQ engine usage:
+ * Caller usage:
  *   await Promise.all([
  *     fetch(process.env.SIGNER_A_URL, { method: 'POST', body: JSON.stringify({ activityId }) }),
  *     fetch(process.env.SIGNER_B_URL, { method: 'POST', body: JSON.stringify({ activityId }) }),
