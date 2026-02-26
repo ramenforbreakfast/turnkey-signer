@@ -3,7 +3,7 @@
  *
  *   1. Re-fetch the activity from Turnkey to verify its current state
  *   2. Verify the activity type is a signing request (not an admin action)
- *   3. Verify the target wallet matches ALLOWED_WALLET_ADDRESS
+ *   3. Verify the target wallet matches WALLET_ADDRESS
  *   4. Call approveActivity with this signer's credentials
  */
 import { getClient, requireEnv } from './turnkey'
@@ -26,7 +26,7 @@ export async function approveIfValid(
   organizationId: string
 ): Promise<ApprovalResult> {
   const client = getClient()
-  const allowedWallet = requireEnv('ALLOWED_WALLET_ADDRESS')
+  const allowedWallet = requireEnv('WALLET_ADDRESS')
 
   // Re-fetch the activity directly from Turnkey — never trust the caller's payload alone
   const res = await client.getActivity({ organizationId, activityId })
