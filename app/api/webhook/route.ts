@@ -22,9 +22,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const activityId: string = body?.activityId
+  // Log the full payload so we can see Turnkey's webhook format
+  console.log('[signer] Incoming webhook body:', JSON.stringify(body))
+
+  const activityId: string = body?.activityId ?? body?.activity?.id
   if (!activityId) {
-    return NextResponse.json({ error: 'Missing activityId' }, { status: 400 })
+    console.log('[signer] Could not extract activityId from payload')
+    return NextResponse.json({ error: 'Missing activityId', received: body }, { status: 400 })
   }
 
   const orgId = requireEnv('TURNKEY_ORG_ID')
