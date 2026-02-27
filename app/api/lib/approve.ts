@@ -36,6 +36,11 @@ export async function approveIfValid(
     return { activityId, skipped: `status=${activity.status}` }
   }
 
+  if (!activity.canApprove) {
+    console.log(`[signer] Already approved activity ${activityId}, skipping`)
+    return { activityId, skipped: 'already_approved' }
+  }
+
   if (!SIGNABLE_TYPES.has(activity.type)) {
     console.warn(`[signer] Skipping unexpected activity type: ${activity.type}`)
     return { activityId, skipped: `unexpected_type=${activity.type}` }
