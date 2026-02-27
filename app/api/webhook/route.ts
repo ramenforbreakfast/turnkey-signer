@@ -28,6 +28,11 @@ export async function POST(req: NextRequest) {
   }
 
   const orgId = requireEnv('TURNKEY_ORG_ID')
-  const result = await approveIfValid(activityId, orgId)
-  return NextResponse.json(result)
+  try {
+    const result = await approveIfValid(activityId, orgId)
+    return NextResponse.json(result)
+  } catch (err: any) {
+    console.error('[signer] Error processing activity:', err)
+    return NextResponse.json({ error: err?.message ?? 'Unknown error' }, { status: 500 })
+  }
 }
