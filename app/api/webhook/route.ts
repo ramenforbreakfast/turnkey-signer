@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   // Log the full payload so we can see Turnkey's webhook format
   console.log('[signer] Incoming webhook body:', JSON.stringify(body))
 
-  const activityId: string = body?.activityId ?? body?.activity?.id
+  const activityId: string = body?.activityId ?? body?.id
   if (!activityId) {
     console.log('[signer] Could not extract activityId from payload')
     return NextResponse.json({ error: 'Missing activityId', received: body }, { status: 400 })
