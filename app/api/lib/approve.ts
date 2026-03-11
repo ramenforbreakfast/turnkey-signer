@@ -36,9 +36,13 @@ export async function approveIfValid(
     return { activityId, skipped: `status=${activity.status}` }
   }
 
-  if (!activity.canApprove) {
-    console.log(`[signer] Already approved activity ${activityId}, skipping`)
-    return { activityId, skipped: 'already_approved' }
+  // Check votes array directly — canApprove is not signer-specific and may remain true
+  // even after this signer has already voted, causing repeated approval spam.
+  const apiPublicKey = requireEnv('TURNKEY_API_PUBLIC_KEY')
+  const alreadyVoted = activity.votes?.some((v) => v.publicKey === apiPublicKey)
+  if (alreadyVoted) {
+    console.log(`[signer] Already voted on activity ${activityId}, skipping`)
+    return { activityId, skipped: 'already_voted' }
   }
 
   if (!SIGNABLE_TYPES.has(activity.type)) {
